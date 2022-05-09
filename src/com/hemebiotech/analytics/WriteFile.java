@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class WriteFile {
 	public void writeFile(Map<String, Integer> symptomHash) throws Exception {
-		FileWriter writer = new FileWriter ("result.out");
+		FileWriter writer = new FileWriter("result.out");
 		for (Map.Entry<String, Integer> entry : symptomHash.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue().toString();
