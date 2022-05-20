@@ -2,29 +2,36 @@ package com.hemebiotech.analytics;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class AnalyticsCounter {
-
 	private final ISymptomReader reader;
+	private final ISymptomWriter writer;
 
-	public AnalyticsCounter(ISymptomReader reader) {
+
+	public AnalyticsCounter(ISymptomReader reader, ISymptomWriter writer) {
 		this.reader = reader;
-	}
+		this.writer = writer;		
+	}	
 
-	// AnalyticsCounter counter = new AnalyticsCounter(sourceFile, targetFile);
-	// counter.processSymptoms();
+	
 	public void processSymptoms() {
-		CountOccurrence analyticsSymptoms = new CountOccurrence();
-		WriteFile analyticsSymptomsListed = new WriteFile();
 		List<String> symptoms = reader.getSymptoms();
-		Map<String, Integer> symptomHashReturned = analyticsSymptoms.countOccurrence(symptoms);
-		try {
-			analyticsSymptomsListed.writeFile(symptomHashReturned);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		Map<String, Integer> occurrence = countOccurrence(symptoms);
+		writer.write(occurrence);
 	}
 
+	private Map<String, Integer> countOccurrence(List<String> symptoms) {
+
+		Map<String, Integer> symptomHash = new TreeMap<String, Integer>();
+		for (String item : symptoms) {
+			if (!symptomHash.containsKey(item)) {
+				symptomHash.put(item, 1);
+			} else if (symptomHash.containsKey(item)) {
+				Integer numberOfTime = symptomHash.get(item);
+				symptomHash.put(item, numberOfTime + 1);
+			}
+		}
+		return symptomHash;
+	}
 }
