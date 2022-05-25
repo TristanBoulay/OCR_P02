@@ -27,6 +27,7 @@ public class WriteSymptomDataToFile implements ISymptomWriter {
 			}
 			writer.close();
 		} catch (Exception e) {
+			System.out.println("impossible d'ecrire dans le fichier de symptomes. Cause de l'erreur: " + e.getMessage());
 		}
 	}
 

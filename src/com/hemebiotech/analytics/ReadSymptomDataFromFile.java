@@ -30,7 +30,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				}
 				reader.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println("impossible de lire le fichier de symptomes. Cause de l'erreur: " + e.getMessage());
 			}
 		}
 
